@@ -9,6 +9,7 @@ from datetime import datetime
 import os
 
 
+@runs_once
 def do_pack():
     """ script that generates a .tgz archive  """
     local("mkdir -p versions")
