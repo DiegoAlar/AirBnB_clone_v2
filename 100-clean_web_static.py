@@ -14,10 +14,11 @@ def do_clean(number=0):
     path_servers = "/data/web_static/releases"
     num = eval(number)
     if number == 0 or number == 1:
-        new_number = 1
-    else:
-        new_number = eval(number) + 1
+        # new_number = 1
+        number = 1
+    # else:
+    #     new_number = eval(number) + 1
     with lcd(path_local):
-        local("ls -1t | grep -v '/$' | tail -n +{:d} | xargs rm -rf".format(new_number))
+        local("ls -1t | grep -v '/$' | tail -n +{:d} | xargs rm -rf".format(number))
     with cd(path_servers):
-        sudo("ls -1t -I test | tail -n +{:d} | xargs rm -rf".format(new_number))
+        sudo("ls -1t -I test | tail -n +{:d} | xargs rm -rf".format(number))
