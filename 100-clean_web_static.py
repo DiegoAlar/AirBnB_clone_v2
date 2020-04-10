@@ -14,7 +14,7 @@ def do_clean(number=0):
     path_servers = "/data/web_static/releases"
     num = eval(number)
     if number == 0 or number == 1:
-        new_number = 2
+        new_number = 1
     else:
         new_number = eval(number) + 1
     with lcd(path_local):
