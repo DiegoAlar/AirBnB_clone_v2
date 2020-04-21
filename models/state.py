@@ -23,8 +23,14 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """ cities for a State instance """
-            all_cities = models.storage.all(City)
-            return [v for v in all_cities.values() if v.state_id == self.id]
+            # all_cities = models.storage.all(City)
+            # return [v for v in all_cities.values() if v.state_id == self.id]
+            obj_l = []
+            ints = models.storage.all()
+            for k, v in ints.items():
+                if k.split(".")[0] == "City" and v.state_id == self.id:
+                    obj_l.append(v)
+            return obj_l
     else:
         cities = relationship(
             "City",
