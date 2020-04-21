@@ -24,7 +24,7 @@ class State(BaseModel, Base):
         def cities(self):
             """ cities for a State instance """
             all_cities = models.storage.all(City)
-            return [v for k, v in all_cities.items() if v.state_id == self.id]
+            return [v for v in all_cities.values() if v.state_id == self.id]
     else:
         cities = relationship(
             "City",
