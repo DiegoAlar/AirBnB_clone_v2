@@ -76,17 +76,11 @@ class DBStorage:
         """ Creates all tables in the database
             Creates the current database session
         """
-        # Base.metadata.create_all(self.__engine)
-        # Session = scoped_session(sessionmaker(
-        #     expire_on_commit=False,
-        #     bind=self.__engine))
-        # self.__session = Session()
-
-        Session_new = sessionmaker(expire_on_commit=False)
-        Session_new.configure(bind=self.__engine)
-        Session = scoped_session(Session_new)
-        self.__session = Session()
         Base.metadata.create_all(self.__engine)
+        Session = scoped_session(sessionmaker(
+            expire_on_commit=False,
+            bind=self.__engine))
+        self.__session = Session()
 
     def close(self):
         """
