@@ -66,3 +66,7 @@ class FileStorage:
             key_to_delete = "{}.{}".format(obj.__class__.__name__, obj.id)
             del (self.__objects[key_to_delete])
             self.save()
+
+    def close(self):
+        """  deserializing the JSON file to objects """
+        reload(self)

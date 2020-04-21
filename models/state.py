@@ -18,16 +18,16 @@ class State(BaseModel, Base):
     """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship(
-        "City",
-        backref='state',
-        cascade="all, delete"
-    )
 
-    @property
-    def cities(self):
-        """ cities for a State instance """
-        return self.cities
-
-        """  all_cities = models.storage.all(City)
-        return [city for city in all_cities if city['state_id'] == self.id] """
+    if type_storage != 'db':
+        @property
+        def cities(self):
+            """ cities for a State instance """
+            all_cities = models.storage.all(City)
+            return [v for k, v in all_cities.items() if v.state_id == self.id]
+    else:
+        cities = relationship(
+            "City",
+            backref='state',
+            cascade="all, delete"
+        )
