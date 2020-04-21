@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """This is the place class"""
 from models.base_model import BaseModel, Base
-from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
+from sqlalchemy.orm import relationship, backref
 from os import getenv
 import models
 
 
+metadata = Base.metadata
 type_storage = getenv('HBNB_TYPE_STORAGE')
 
 
@@ -15,8 +16,30 @@ class Place(BaseModel, Base):
     """
     __tablename__ = 'places'
 
+    place_amenity = Table( # al ppio despues de la clase
+    'place_amenity',
+    metadata,
+    Column(
+        'place_id',
+        String(60),
+        ForeignKey('places.id'),
+        # primary_key=True, # no 
+        nullable=False
+    ),
+    Column(
+        'amenity_id',
+        String(60),
+        ForeignKey('amenities.id'),
+        # primary_key=True, # no
+        nullable=False)
+    )
+
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+    # city_id = Column(String(60), ForeignKey(City.id), nullable=False)
+
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    # user_id = Column(String(60), ForeignKey(User.id), nullable=False)
+
 
     name = Column(String(128), nullable=False)
     description = Column(String(1024))
@@ -30,32 +53,14 @@ class Place(BaseModel, Base):
 
     amenity_ids = []
 
-    metadata = Base.metadata
 
-    place_amenity = Table(
-        'place_amenity',
-        metadata,
-        Column(
-            'place_id',
-            String(60),
-            ForeignKey('places.id'),
-            primary_key=True,
-            nullable=False
-        ),
-        Column(
-            'amenity_id',
-            String(60),
-            ForeignKey('amenities.id'),
-            primary_key=True,
-            nullable=False
-        )
-    )
+ ## place amenity iba aca
 
     if type_storage == 'db':
         reviews = relationship(
             "Review",
             backref="place",
-            cascade="all, delete"
+            # cascade="all, delete" # no
         )
 
         amenities = relationship(
@@ -69,7 +74,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """Getter"""
-            return self.reviews
+            return self.reviews # arreglar
 
         @property
         def amenities(self):
