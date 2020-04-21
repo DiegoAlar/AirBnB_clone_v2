@@ -45,13 +45,19 @@ class DBStorage:
         a_dict = {}
         classes = [User, State, City, Place, Review, Amenity]
 
+        if type(cls) is not str:
+            x = cls
+            cls = str(cls)
+        else:
+            x = eval(cls)
+
         if cls is None:
             for cl in classes:
                 for instance in self.__session.query(cl).all():
                     key = cl.__name__ + "." + instance.id
                     a_dict[key] = instance
         else:
-            for instance in self.__session.query(cls).all():
+            for instance in self.__session.query(x).all(): # cambie __session.query(cls).all()
                 key = cls.__name__ + "." + instance.id
                 a_dict[key] = instance
         return a_dict
