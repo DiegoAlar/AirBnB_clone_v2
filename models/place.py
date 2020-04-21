@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship, backref
 from os import getenv
 import models
+import os
 
 
 metadata = Base.metadata
@@ -35,11 +36,7 @@ class Place(BaseModel, Base):
     )
 
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
-    # city_id = Column(String(60), ForeignKey(City.id), nullable=False)
-
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-    # user_id = Column(String(60), ForeignKey(User.id), nullable=False)
-
 
     name = Column(String(128), nullable=False)
     description = Column(String(1024))
@@ -52,9 +49,6 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
 
     amenity_ids = []
-
-
- ## place amenity iba aca
 
     if type_storage == 'db':
         reviews = relationship(
