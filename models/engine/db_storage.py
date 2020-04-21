@@ -45,19 +45,13 @@ class DBStorage:
         a_dict = {}
         classes = [User, State, City, Place, Review, Amenity]
 
-        if type(cls) is not str:
-            x = cls
-            cls = str(cls)
-        else:
-            x = eval(cls)
-
         if cls is None:
             for cl in classes:
                 for instance in self.__session.query(cl).all():
                     key = cl.__name__ + "." + instance.id
                     a_dict[key] = instance
         else:
-            for instance in self.__session.query(x).all(): # cambie __session.query(cls).all()
+            for instance in self.__session.query(cls).all():
                 key = cls.__name__ + "." + instance.id
                 a_dict[key] = instance
         return a_dict
@@ -82,11 +76,17 @@ class DBStorage:
         """ Creates all tables in the database
             Creates the current database session
         """
-        Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(
-            expire_on_commit=False,
-            bind=self.__engine))
+        # Base.metadata.create_all(self.__engine)
+        # Session = scoped_session(sessionmaker(
+        #     expire_on_commit=False,
+        #     bind=self.__engine))
+        # self.__session = Session()
+
+        Session_new = sessionmaker(expire_on_commit=False)
+        Session_new.configure(bind=self.__engine)
+        Session = scoped_session(Session_new)
         self.__session = Session()
+        Base.metadata.create_all(self.__engine)
 
     def close(self):
         """
