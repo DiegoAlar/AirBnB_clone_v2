@@ -32,9 +32,10 @@ class DBStorage:
     def __init__(self):
         """ Constructor """
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@localhost/{}'.format(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
                 username,
                 passw,
+                hostname,
                 datab),
             pool_pre_ping=True)
         if dev == 'test':
@@ -76,7 +77,9 @@ class DBStorage:
         """ Creates all tables in the database
             Creates the current database session
         """
+        print('*'*30)
         Base.metadata.create_all(self.__engine)
+        print('*'*30)
         Session = scoped_session(sessionmaker(
             expire_on_commit=False,
             bind=self.__engine))
