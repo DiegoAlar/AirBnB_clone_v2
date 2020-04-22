@@ -20,7 +20,7 @@ def teardown_request(self):
 def states_list():
     """ display all states """
     all_states = storage.all(State)
-    return render_template('7-states_list.html', all_states)
+    return render_template('7-states_list.html', all_states=all_states)
 
 
 if __name__ == "__main__":
