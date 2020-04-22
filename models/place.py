@@ -19,21 +19,21 @@ class Place(BaseModel, Base):
     """
     __tablename__ = 'places'
     place_amenity = Table(
-    'place_amenity',
-    metadata,
-    Column(
-        'place_id',
-        String(60),
-        ForeignKey('places.id'),
-        # primary_key=True, # no 
-        nullable=False
-    ),
-    Column(
-        'amenity_id',
-        String(60),
-        ForeignKey('amenities.id'),
-        # primary_key=True, # no
-        nullable=False)
+        'place_amenity',
+        metadata,
+        Column(
+            'place_id',
+            String(60),
+            ForeignKey('places.id'),
+            # primary_key=True, # no
+            nullable=False
+        ),
+        Column(
+            'amenity_id',
+            String(60),
+            ForeignKey('amenities.id'),
+            # primary_key=True, # no
+            nullable=False)
     )
 
     city_id = Column(String(60), ForeignKey(City.id), nullable=False)
@@ -65,7 +65,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """Getter"""
-            return self.reviews # arreglar
+            return self.reviews  # arreglar
 
         @property
         def amenities(self):
