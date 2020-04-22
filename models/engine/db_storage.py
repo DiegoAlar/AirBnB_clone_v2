@@ -77,9 +77,7 @@ class DBStorage:
         """ Creates all tables in the database
             Creates the current database session
         """
-        print('*'*30)
         Base.metadata.create_all(self.__engine)
-        print('*'*30)
         Session = scoped_session(sessionmaker(
             expire_on_commit=False,
             bind=self.__engine))
