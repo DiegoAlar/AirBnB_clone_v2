@@ -56,26 +56,3 @@
     </footer>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-<h4>&nbsp;</h4>
-<div class="popover">
-  <ul>
-	  {% for state in states.values()|sort(attribute='name') %}
-		  <LI><H2>{{ state.name }}:</H2>
-		  <UL>
-			  {% for city in state.cities|sort(attribute='name') %}
-				  <LI>{{ city.name }}</B></LI>
-			  {% endfor %}
-		  </UL>
-	  </LI>
-	  {% endfor %}
